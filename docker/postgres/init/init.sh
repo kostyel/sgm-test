@@ -8,7 +8,7 @@ psql -v ON_ERROR_STOP=1 --username postgres <<-EOSQL
   NOCREATEDB
   NOCREATEROLE
   NOREPLICATION
-  PASSWORD '1xbn1URIwB';
+  PASSWORD '12345';
 
   CREATE DATABASE coredb
     WITH OWNER = core
@@ -25,9 +25,9 @@ EOSQL
 
 psql -v ON_ERROR_STOP=1 --username core coredb <<-EOSQL
 
-  CREATE SCHEMA sp
+  CREATE SCHEMA bs
       AUTHORIZATION core;
 
-  GRANT ALL ON SCHEMA sp TO core;
+  GRANT ALL ON SCHEMA bs TO core;
 EOSQL
 
