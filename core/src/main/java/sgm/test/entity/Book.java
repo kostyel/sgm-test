@@ -27,9 +27,9 @@ public class Book {
     @Column
     private String author;
 
-    @Column
+    @Column(name = "bookshelf_id")
     private Long bookshelf;
 
-    @Column
+    @Column(name = "level_id")
     private Long level;
 }

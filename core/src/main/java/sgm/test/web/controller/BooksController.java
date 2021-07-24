@@ -20,7 +20,9 @@ public interface BooksController {
     @Operation(summary = "Получение списка книг по id стеллажа или уровня, или и того и другого")
     @PostMapping("/findByBookshelfOrLevel")
     ResponseEntity<List<BookWebDto>> findByBookshelfOrLevel(@RequestParam(required = false) Long bookshelfId,
-                                                            @RequestParam(required = false) Long levelId);
+                                                            @RequestParam(required = false) Long levelId,
+                                                            @RequestParam(required = false, defaultValue = "0") int page,
+                                                            @RequestParam(required = false, defaultValue = "10") int size);
 
     @Operation(summary = "Добавление книги")
     @PutMapping("/add")
@@ -35,7 +37,9 @@ public interface BooksController {
     ResponseEntity<BookWebDto> updateBook(@RequestBody BookWebDto webDto);
 
     @Operation(summary = "Поиск книги по названию")
-    @GetMapping("/search/{name}")
-    ResponseEntity<List<BookWebDto>> search(@PathVariable String name);
+    @PostMapping("/search/{name}")
+    ResponseEntity<List<BookWebDto>> search(@PathVariable String name,
+                                            @RequestParam(required = false, defaultValue = "0") int page,
+                                            @RequestParam(required = false, defaultValue = "10") int size);
 
 }

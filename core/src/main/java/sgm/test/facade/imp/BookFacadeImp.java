@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import sgm.test.dto.BookDto;
+import sgm.test.exception.*;
 import sgm.test.facade.BookFacade;
 import sgm.test.mapper.BookMapper;
 import sgm.test.service.BooksService;
@@ -29,9 +30,9 @@ public class BookFacadeImp implements BookFacade {
         return bookMapper.toWebDto(dto);
     }
 
-    public List<BookWebDto> findByBookshelfOrLevel(Long bookshelfId, Long levelId) {
+    public List<BookWebDto> findByBookshelfOrLevel(Long bookshelfId, Long levelId, int page, int size) {
         chekBookshelfAndLevel(bookshelfId,levelId);
-        List<BookDto> dtoList = booksService.findByBookshelfOrLevel(bookshelfId, levelId);
+        List<BookDto> dtoList = booksService.findByBookshelfOrLevel(bookshelfId, levelId, page, size);
         log.debug("Получен список книг в количестве {} штук", dtoList.size());
         return bookMapper.toWebDtoList(dtoList);
     }
@@ -40,7 +41,7 @@ public class BookFacadeImp implements BookFacade {
         booksService.validBook(bookMapper.toDto(webDto));
         chekBookshelfAndLevel(webDto.getBookshelf(), webDto.getLevel());
         BookDto bookDto = booksService.addBook(bookMapper.toDto(webDto));
-        log.debug("Книга сохранена в хранилище, присвоен id {}", bookDto.getId());
+        log.debug("Книга успешно сохранена в хранилище, присвоен id {}", bookDto.getId());
         return bookMapper.toWebDto(bookDto);
     }
 
@@ -57,18 +58,18 @@ public class BookFacadeImp implements BookFacade {
         return bookMapper.toWebDto(dto);
     }
 
-    public List<BookWebDto> search(String name) {
-        List<BookDto> dtoList = booksService.search(name);
+    public List<BookWebDto> search(String name, int page, int size) {
+        List<BookDto> dtoList = booksService.search(name, page, size);
         log.debug("Из хранилища получен список книг в размере: {}", dtoList.size());
         return bookMapper.toWebDtoList(dtoList);
     }
 
     private void chekBookshelfAndLevel(Long bookshelfId, Long levelId) {
-        if (bookshelfId != null && bookshelfService.checkBookshelf(bookshelfId)) {
-            //TODO Обработку ошибки
+        if (bookshelfId != null && !bookshelfService.checkBookshelf(bookshelfId)) {
+            throw new NotFoundException(String.format("Полка с id = %s не найдена", bookshelfId));
         }
-        if (levelId != null && levelService.checkLevel(levelId)){
-            //TODO Обработку ошибки
+        if (levelId != null && !levelService.checkLevel(levelId)){
+            throw new NotFoundException(String.format("Уровень с id = %s не найдена", levelId));
         }
     }
 }

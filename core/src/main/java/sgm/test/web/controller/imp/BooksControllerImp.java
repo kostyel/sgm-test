@@ -22,9 +22,9 @@ public class BooksControllerImp implements BooksController {
         return ResponseEntity.ok(facade.findById(id));
     }
 
-    public ResponseEntity<List<BookWebDto>> findByBookshelfOrLevel(Long bookshelfId, Long levelId) {
+    public ResponseEntity<List<BookWebDto>> findByBookshelfOrLevel(Long bookshelfId, Long levelId, int page, int size) {
         log.debug("Получен запрос на поиск книг по id полки:{} и уровня:{}", bookshelfId, levelId);
-        return ResponseEntity.ok(facade.findByBookshelfOrLevel(bookshelfId, levelId));
+        return ResponseEntity.ok(facade.findByBookshelfOrLevel(bookshelfId, levelId, page, size));
     }
 
     public ResponseEntity<BookWebDto> addBook(BookWebDto webDto) {
@@ -42,8 +42,8 @@ public class BooksControllerImp implements BooksController {
         return ResponseEntity.ok(facade.updateBook(webDto));
     }
 
-    public ResponseEntity<List<BookWebDto>> search(String name) {
+    public ResponseEntity<List<BookWebDto>> search(String name, int page, int size) {
         log.debug("Получен запрос на поиск книги по названию: {}", name);
-        return ResponseEntity.ok(facade.search(name));
+        return ResponseEntity.ok(facade.search(name, page, size));
     }
 }

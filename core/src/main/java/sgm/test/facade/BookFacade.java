@@ -7,21 +7,26 @@ import java.util.List;
 public interface BookFacade {
     /**
      * Поиск книги по id
+     *
      * @param id id книги
      * @return Веб модель книги
      */
     BookWebDto findById(Long id);
 
     /**
-     * Поиск книг по id полки и уровня
+     * Поиск книг с фильтром по id полки и уровня
+     *
      * @param bookshelfId id полки
-     * @param levelId id уровня
+     * @param levelId     id уровня
+     * @param page        номер страницы
+     * @param size        количество записей
      * @return Список книг
      */
-    List<BookWebDto> findByBookshelfOrLevel(Long bookshelfId, Long levelId);
+    List<BookWebDto> findByBookshelfOrLevel(Long bookshelfId, Long levelId, int page, int size);
 
     /**
      * Добавить новую книгу
+     *
      * @param webDto Веб модель книги
      * @return Веб модель книги
      */
@@ -29,12 +34,14 @@ public interface BookFacade {
 
     /**
      * Удаление книги по id
+     *
      * @param id id книги
      */
     void deleteBook(Long id);
 
     /**
      * Обновление информации о книге
+     *
      * @param webDto Веб модель книги
      * @return Обновленная веб модель книги
      */
@@ -42,9 +49,10 @@ public interface BookFacade {
 
     /**
      * Поиск книги по названию
+     *
      * @param name Название книги
      * @return Список книг
      */
-    List<BookWebDto> search(String name);
+    List<BookWebDto> search(String name, int page, int size);
 
 }

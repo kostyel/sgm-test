@@ -8,6 +8,7 @@ public interface BookshelfFacade {
 
     /**
      * Найти все значения полок
+     *
      * @return список полок
      */
     List<BookshelfWebDto> findAll();

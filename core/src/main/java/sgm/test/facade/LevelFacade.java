@@ -8,6 +8,7 @@ public interface LevelFacade {
 
     /**
      * Найти все значения уровней
+     *
      * @return список уровней
      */
     List<LevelWebDto> findAll();
