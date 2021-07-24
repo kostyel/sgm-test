@@ -17,7 +17,7 @@ public interface BooksController {
     @GetMapping("/{id}")
     ResponseEntity<BookWebDto> findById(@PathVariable Long id);
 
-    @Operation(summary = "Получение списка книг по id стеллажа или уровня, или и того и другого")
+    @Operation(summary = "Получение списка книг с фильтрами по полке и уровню")
     @PostMapping("/findByBookshelfOrLevel")
     ResponseEntity<List<BookWebDto>> findByBookshelfOrLevel(@RequestParam(required = false) Long bookshelfId,
                                                             @RequestParam(required = false) Long levelId,
