@@ -37,8 +37,8 @@ public interface BooksController {
     ResponseEntity<BookWebDto> updateBook(@RequestBody BookWebDto webDto);
 
     @Operation(summary = "Поиск книги по названию")
-    @PostMapping("/search/{name}")
-    ResponseEntity<List<BookWebDto>> search(@PathVariable String name,
+    @PostMapping("/search")
+    ResponseEntity<List<BookWebDto>> search(@RequestParam String name,
                                             @RequestParam(required = false, defaultValue = "0") int page,
                                             @RequestParam(required = false, defaultValue = "10") int size);
 
